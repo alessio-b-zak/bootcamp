@@ -89,8 +89,8 @@
         &g_{m}(x) = 0
     \end{align*}}
     \\~\\
-    Where $f_0,\cdots, f_n$ are convex functions and $g_0, \cdots, g_m$ are
-    affine
+    Where $f_0,\cdots, f_n$ are convex functions $\rnum^{p} \rightarrow \rnum$ and $g_0, \cdots, g_m$ are
+    affine $\rnum^{p} \rightarrow \rnum$.
 \end{frame}
 
 \begin{frame}
@@ -106,16 +106,94 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Feasible Set}
+    Some important propterties of convexity are:
+    \begin{itemize}
+        \item The intersection of convex sets is convex
+        \item The sublevel sets ($\{x \, | \, f(x) \leq 0 \}$) of convex
+            functions are convex
+        \item The image of affine functions is convex
+    \end{itemize}
+    \todo{check affine function comment}
+    \\~\\
+    Because of this the feasible set of of a convex optimisation problem is
+    convex.
+\end{frame}
+
+\begin{frame}
     \frametitle{Convexity and Optimality}
+    The above is important because of the following key fact:
+    \\~\\
+    Any local minimum of a convex function over a convex set is a global
+    minimum
+    \todo{Do this proof in the extended material}
+    \\~\\
+    This means that any algorithm for a convex optimisation problem only has to
+    find a local minumum.
+    \\~\\
+    This guarantees that algorithms which are only
+    guaranteed to find local minima for all problems provide global minima for
+    convex problems.
+\end{frame}
 
-\end{frame}<++>
-% \begin{frame}
-%     \frametitle{Feasible Set}
-%     An important property of convex sets is that their intersection is also
-%     convex. . Therefore the feasible set is itself convex.
-% \end{frame}
+\begin{frame}
+    First order and Second order sufficient conditions for convexity and
+    optimiality
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Duality and the Langrangian}
+    For any optimisation problem there is a related problem known as the dual
+    (with the original problem known as the primal).
+    \\~\\
+    The solution to the dual provides some information about the solution to the
+    primal. The dual problem is related to the Lagrangian function of the
+    original problem.
+
+    The dual problem is always convex and therefore being able to solve
+    optimisation problem  
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Lagrangian}
+    Consider some optimisation problem:
+    {\footnotesize
+    \begin{align*}
+        \text{Find the }\underset{x}{\text{min}}\; &f_{0}(x) \\
+        \text{  such that }&f_{1}(x) \leq 0 \\
+        & \hspace{5mm} \vdots \\
+        &f_{n}(x) \leq 0 \\
+        &g_{0}(x) = 0 \\
+        &\hspace{5mm} \vdots \\
+        &g_{m}(x) = 0
+    \end{align*}}
+    Where $f_0,\cdots, f_n, g_0, \cdots, g_m:\, \rnum^{p} \rightarrow \rnum$
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Lagrangian}
+    The Lagrangian, $L : \rnum^{p} \times \rnum^{n} \times \rnum^{m} \rightarrow
+    \rnum$, of this optimisation problem is the function:
+    \begin{align*}
+        L(x, \lambda, \mu) = f_{0}(x) + \sum\limits_{i=1}^{n}\lambda_{i} f_{i}(x) +
+        \sum\limits_{j=0}^{m}\mu_{j}g_{j}(x)
+    \end{align*}
+    The parameters $\lambda$ and $\mu$ are known as the Lagrangian multipliers
+\end{frame}
 
 
 
+\begin{frame}
+    \frametitle{Strong and Weak Duality}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Strong Duality for Convex Problems}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Solving Convex Optimisation Problems}
+\end{frame}
 \end{document}
 
