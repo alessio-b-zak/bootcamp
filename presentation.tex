@@ -1,7 +1,10 @@
 \documentclass{beamer}
 \usetheme{Boadilla}
 \usepackage{amssymb}
+\usepackage{mathtools}
 
+\usepackage{todonotes}
+\presetkeys{todonotes}{inline}{}
 
 \def\rnum{\mathbb{R}}
 
@@ -39,6 +42,7 @@
         \theta x + (1-\theta)y \in C
     \end{align*}
     i.e. all points on the line segment between $x$ and $y$ lie in C
+    \todo{add affine definition}
 \end{frame}
 
 \begin{frame}
@@ -49,8 +53,10 @@
     \begin{align*}
         f(\lambda x + (1 - \lambda)y) \leq f(\lambda x) + f((1-\lambda)y)
     \end{align*}
-    \todo{picture of convexity or further explanation}
+    \todo{add picture or better explanation and affine function definition,
+    concave = convex -f}
 \end{frame}
+
 \begin{frame}
     \frametitle{Minima and Maxima}
     $f: S \subseteq \rnum^{n} \rightarrow \rnum$ has a global minimum (maximum
@@ -59,11 +65,57 @@
         \forall \, x \in S, \, \, f(x^{\star}) \leq f(x), \hspace{2mm}  (f(x^{\star}) \geq f(x))
     \end{align*}
     \\~\\
-    $f$ has a local minimum (maxmum resp.) around $x^{\star}$ if $\exists \, R \in
+    $f$ has a local minimum (maximum resp.) around $x^{\star}$ if $\exists \, R \in
      \rnum$ \text{ such that }
     \begin{align*}
-        \forall x \, \in B(x^{\star}, R), \, \, f(x^{\star}) \leq f(x), \hspace{2mm} 
-    \end{align*}<++>
+        \forall x \, \in B(x^{\star}, R), \, \, f(x^{\star}) \leq f(x),
+        \hspace{2mm} (f(x^{\star}) \geq f(x))
+    \end{align*}
+    \todo{add strict definitions}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Convex Optimisation Problem}
+    A convex optimisation problem is a min/maximisation problem in the following
+    form:
+    {\footnotesize
+    \begin{align*}
+        \text{Find the }\underset{x}{\text{min}}\; &f_{0}(x) \\
+        \text{  such that }&f_{1}(x) \leq 0 \\
+        & \hspace{5mm} \vdots \\
+        &f_{n}(x) \leq 0 \\
+        &g_{0}(x) = 0 \\
+        &\hspace{5mm} \vdots \\
+        &g_{m}(x) = 0
+    \end{align*}}
+    \\~\\
+    Where $f_0,\cdots, f_n$ are convex functions and $g_0, \cdots, g_m$ are
+    affine
+\end{frame}
+
+\begin{frame}
+    \frametitle{Feasible Set}
+    The feasible set $C \subseteq D =
+    \bigcap\limits_{i=0}^{m}\text{dom}(f_{i})\bigcap\limits_{j=0}^{n}\text{dom}(g_{j})$
+    is the set of all $x \in D$ such that the constraints are satisfied.
+    \\~\\
+    \\~\\
+    The optimal value of problem is $\text{inf} \{f_{0}(x) \, | \, x
+    \in C \}$. If there is no lower bound the optimisation problem has optimal
+    value $-\infty$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Convexity and Optimality}
+
 \end{frame}<++>
+% \begin{frame}
+%     \frametitle{Feasible Set}
+%     An important property of convex sets is that their intersection is also
+%     convex. . Therefore the feasible set is itself convex.
+% \end{frame}
+
+
+
 \end{document}
 
