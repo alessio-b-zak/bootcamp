@@ -150,9 +150,9 @@
     The solution to the dual provides some information about the solution to the
     primal. The dual problem is related to the Lagrangian function of the
     original problem.
-
+    \\~\\
     The dual problem is always convex and therefore being able to solve
-    optimisation problem  
+    convex optimisation problems allows us to solve the dual.
 \end{frame}
 
 \begin{frame}
@@ -201,24 +201,51 @@
     \frametitle{The Dual Problem}
     Given that the values of the dual function lower bound the optimal solution
     for the primal we can formulate the question of what the greatest lower
-    bound, is. This leads to the optimisation problem.
-
-
-\end{frame}<++>
-
-
-
-
-\begin{frame}
-    \frametitle{Strong and Weak Duality}
-\end{frame}
+    bound is.
+    \\~\\
+    This leads to the optimisation problem.
+    {\footnotesize
+    \begin{align*}
+        \text{maximise } \, &L^{\star}(\lambda, \mu)\\
+        \text{such that } &\lambda \geq 0
+    \end{align*}}
+    With optimal value $g^{\star} \leq p^{\star}$. \end{frame}
 
 \begin{frame}
-    \frametitle{Strong Duality for Convex Problems}
+    \frametitle{Duality}
+    Regardless of whether the primal problem is convex the dual problem is
+    \textit{always} convex.
+    \\~\\
+    This means that if convex optimisation problems can be solved efficiently
+    then a lower bound can be placed on any optimisation problem that may be
+    harder to solve.
+    \\~\\
+    This can be used in and of itself but can also be used to derive stopping
+    conditions on algorithms aiming to solve the primal.
 \end{frame}
 
 \begin{frame}
     \frametitle{Solving Convex Optimisation Problems}
+    One method of solving convex optimisation problems is using interior point
+    methods.
+    \\~\\
+    Intuition: Reformulate the problem as an equality constrained problem which
+    can be solved via Newton's Method
 \end{frame}
+
+
+
+
+% \begin{frame}
+%     \frametitle{Strong and Weak Duality}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Strong Duality for Convex Problems}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Solving Convex Optimisation Problems}
+% \end{frame}
 \end{document}
 
