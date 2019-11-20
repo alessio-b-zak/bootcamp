@@ -1,0 +1,69 @@
+\documentclass{beamer}
+\usetheme{Boadilla}
+\usepackage{amssymb}
+
+
+\def\rnum{\mathbb{R}}
+
+\title{Convex Optimisation}
+\author{Alessio Zakaria}
+\date{}
+\begin{document}
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}
+    \frametitle{Convex Optimisation?}
+    \begin{itemize}
+    \item What is it?
+        \begin{itemize}
+        \item Finding the maxima / minima of convex functions over convex sets
+        with respect to convex or affine constraints
+        \end{itemize}
+    \item Why do we care?
+        \begin{itemize}
+            \item Convex functions display many theoretical properties that are
+                suited to optimisation
+            \item Solving convex optimisation allows you to place a lower bound
+                on non-convex functions
+            \item Many real world optimisations are convex
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+\begin{frame}
+    \frametitle{Convexity}
+    A set $C \subseteq \mathbb{R}$ is convex if $\forall \,  x,  y \in C, \,
+    \forall \, \theta \in [0, \, 1]$
+    \begin{align*}
+        \theta x + (1-\theta)y \in C
+    \end{align*}
+    i.e. all points on the line segment between $x$ and $y$ lie in C
+\end{frame}
+
+\begin{frame}
+    \frametitle{Convex Functions}
+    A function $f : C \subseteq \mathbb{R}^{n} \rightarrow \rnum^{m}$ is convex
+    on some convex set $C$ if $\forall \, x, \, y \in C, \forall \, \lambda \in
+    [0,1]$
+    \begin{align*}
+        f(\lambda x + (1 - \lambda)y) \leq f(\lambda x) + f((1-\lambda)y)
+    \end{align*}
+    \todo{picture of convexity or further explanation}
+\end{frame}
+\begin{frame}
+    \frametitle{Minima and Maxima}
+    $f: S \subseteq \rnum^{n} \rightarrow \rnum$ has a global minimum (maximum
+    resp.) $x^{\star}$ if:
+    \begin{align*}
+        \forall \, x \in S, \, \, f(x^{\star}) \leq f(x), \hspace{2mm}  (f(x^{\star}) \geq f(x))
+    \end{align*}
+    \\~\\
+    $f$ has a local minimum (maxmum resp.) around $x^{\star}$ if $\exists \, R \in
+     \rnum$ \text{ such that }
+    \begin{align*}
+        \forall x \, \in B(x^{\star}, R), \, \, f(x^{\star}) \leq f(x), \hspace{2mm} 
+    \end{align*}<++>
+\end{frame}<++>
+\end{document}
+
