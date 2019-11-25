@@ -233,8 +233,67 @@
     can be solved via Newton's Method
 \end{frame}
 
+\begin{frame}
+    \frametitle{Newton's Method}
+    Newton's method is a method for solving unconstrained minimisation problems
+    on twice differentiable functions that makes use of the Hessian to take into
+    account local curvature information to more quickly reach the minimum.
+\end{frame}
 
+\begin{frame}
+    \frametitle{Newton's Method for Equality Constrained Optimisation}
+    \todo{here}
+\end{frame}
 
+\begin{frame}
+    \frametitle{Inequalities into Equalities}
+    We incorporate the inequalities into the objective using an indicator
+    function:
+    \begin{align*}
+        \text{minimise } \, &f_{0} +
+        \sum_{i=1}^{m}\mathcal{I}\_\left(f_{i}\,(x)\right )\\
+        \text{such that } & \mathbf{A}\mathbf{x} =\mathbf{b}
+    \end{align*}
+
+where
+
+\begin{align*}
+    \mathcal{I}\_(u) =
+    \begin{cases}
+        0 &u \leq 0 \\
+        \infty &u > 0
+    \end{cases}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Inequalities into Equalities}
+    This objective is not differentiable and therefore Newton's method cannot be
+    applied.
+    \\~\\
+    To rectify this we can use an approximation using the log barrier function.
+    \begin{align*}
+        \hat{\mathcal{I}}\_\, (u) = -\frac{1}{t}\, \text{log}\,(-u) \\\\
+        \mathbf{dom} \,\,\,\hat{\mathcal{I}}\_ = -\rnum^{++}
+    \end{align*}
+    Where $t$ is a parameter that is set to adjust the accuracy of the barrier
+    function
+\end{frame}
+
+\begin{frame}
+    \frametitle{Log Barrier Function}
+    The log barrier function is differentiable, closed and convex and therefore
+    the objective also remains closed, convex and differentiable making it
+    amenable to Newton's method.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Central Path}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Barrier Method Algorithm}
+\end{frame}
 
 % \begin{frame}
 %     \frametitle{Strong and Weak Duality}
