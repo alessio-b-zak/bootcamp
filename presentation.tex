@@ -6,6 +6,8 @@
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{}
 
+\setlength {\marginparwidth }{2cm}
+
 \def\rnum{\mathbb{R}}
 
 \title{Convex Optimisation}
@@ -43,18 +45,6 @@
     \end{align*}
     i.e. all points on the line segment between $x$ and $y$ lie in C
     \todo{add affine definition}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Convex Functions}
-    A function $f : C \subseteq \mathbb{R}^{n} \rightarrow \rnum^{m}$ is convex
-    on some convex set $C$ if $\forall \, x, \, y \in C, \forall \, \lambda \in
-    [0,1]$
-    \begin{align*}
-        f(\lambda x + (1 - \lambda)y) \leq f(\lambda x) + f((1-\lambda)y)
-    \end{align*}
-    \todo{add picture or better explanation and affine function definition,
-    concave = convex -f}
 \end{frame}
 
 \begin{frame}
@@ -99,7 +89,6 @@
     \bigcap\limits_{i=0}^{m}\text{dom}(f_{i})\bigcap\limits_{j=0}^{n}\text{dom}(g_{j})$
     is the set of all $x \in D$ such that the constraints are satisfied.
     \\~\\
-    \\~\\
     The optimal value of problem is $\text{inf} \{f_{0}(x) \, | \, x
     \in C \}$. If there is no lower bound the optimisation problem has optimal
     value $-\infty$.
@@ -115,7 +104,6 @@
         \item The image of affine functions is convex
     \end{itemize}
     \todo{check affine function comment}
-    \\~\\
     Because of this the feasible set of of a convex optimisation problem is
     convex.
 \end{frame}
@@ -127,7 +115,6 @@
     Any local minimum of a convex function over a convex set is a global
     minimum
     \todo{Do this proof in the extended material}
-    \\~\\
     This means that any algorithm for a convex optimisation problem only has to
     find a local minumum.
     \\~\\
@@ -282,19 +269,87 @@ where
 
 \begin{frame}
     \frametitle{Log Barrier Function}
-    The log barrier function is differentiable, closed and convex and therefore
-    the objective also remains closed, convex and differentiable making it
-    amenable to Newton's method.
+    The minimisation problem can be reformuated as the following:
+    \begin{align*}
+        \text{minimise } \, &t f_{0} +
+        \varphi(x)\\
+        \text{such that } & \mathbf{A}\mathbf{x} =\mathbf{b}
+    \end{align*}
+    where
+    \begin{align*}
+        \varphi(x) = - \sum\limits_{i=1}^{m}\text{log}(-f_{i}(x))
+    \end{align*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Log Barrier Function}
+    \todo{picture of log barrier}
+    The log barrier function is twice continuously differentiable and convex
+    and therefore is amenable to Newton's method.
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Central Path}
+    Assuming the log barrier formalisation has a unique solution for all
+    $t > 0$ obtainable via Newton's method, we can define the central path,
+    $x^{\star}(t)$ as the solution to the minimisation problem for a given
+    $t$.
 \end{frame}
 
 \begin{frame}
     \frametitle{Central Path}
+    From the KKT conditions a dual feasible point for every
+    $x^{\star}(t)$ can be obtained which lower bounds the optimal value for
+    the original problem.
+    \\~\\
+    For a given $x^{\star}(t)$, $f_{0}(x^{\star}(t)$ is no more than
+    $\frac{m}{t}$ away from the optimal value for the original primal problem.
+    \\~\\
+    As $t \rightarrow \infty$ the central path solution will tend to
+    $p^{\star}$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Barrier Method}
+    Given that an abitrary $x^{\star}(t)$ is $\frac{m}{t}$ suboptimal a method of
+    finding the minimum of the original problem to a specific accuracy,
+    $\varepsilon$ is by solving the problem:
+    \begin{align*}
+        \text{minimise } \, &\left(\frac{m}{\varepsilon}\right)\,f_{0} +
+        \varphi(x)\\
+        \text{such that } & \mathbf{A}\mathbf{x} =\mathbf{b}
+    \end{align*}
+    This can be solved using Newton's method however it does not have good
+    practical performance due to numerical instability.
+    \todo{eps needs to be big}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Barrier Method}
+    The barrier method avoids the problems of the previous method which solves a
+    series of minimisation problems.
+    \\~\\
+    The barrier method computes $x^{\star}(t)$ for increasing values of
+    $t$ using Newton's method until $t \geq \frac{m}{\varepsilon}$.
 \end{frame}
 
 \begin{frame}
     \frametitle{Barrier Method Algorithm}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Barrier Method Algorithm}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Convergence of Barrier Method}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Applications}
+\end{frame}
 % \begin{frame}
 %     \frametitle{Strong and Weak Duality}
 % \end{frame}
