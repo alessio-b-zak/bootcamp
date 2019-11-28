@@ -2,9 +2,15 @@
 \usetheme{Boadilla}
 \usepackage{amssymb}
 \usepackage{mathtools}
+\usepackage{amsmath, bm}
 
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{}
+
+
+\usepackage{algorithm,algorithmic}
+
+
 
 \setlength {\marginparwidth }{2cm}
 
@@ -61,12 +67,14 @@
         \forall x \, \in B(x^{\star}, R), \, \, f(x^{\star}) \leq f(x),
         \hspace{2mm} (f(x^{\star}) \geq f(x))
     \end{align*}
-    \todo{add strict definitions}
+    \\~\\
+    If these inequalities are strict then $x^{\star}$ is known as a strict
+    maximum (minimum)
 \end{frame}
 
 \begin{frame}
     \frametitle{Convex Optimisation Problem}
-    A convex optimisation problem is a min/maximisation problem in the following
+    A convex optimisation problem is a minimisation problem in the following
     form:
     {\footnotesize
     \begin{align*}
@@ -124,8 +132,35 @@
 \end{frame}
 
 \begin{frame}
-    First order and Second order sufficient conditions for convexity and
-    optimiality
+    \frametitle{Characterisations of Convexity}
+    First Order Characterisation of Convexity: $f : \rnum^{n} \rightarrow \rnum$
+    differentiable is convex iff \textbf{dom}$(f)$ is convex and $\forall \, x
+    \, y \in$ \textbf{dom}$(f)$:
+    \begin{align*}
+        f(y) \geq f(x) + \nabla f(x)^{T}(y-x)
+    \end{align*}
+    i.e. the tangent plane underapproximates the function at every point.
+    \\~\\
+    Second Order Characterisation of Convexity: $f : \rnum^{n} \rightarrow
+    \rnum$ twice differentiable is convex iff \textbf{dom}$(f)$ is convex and
+    \begin{align*}
+        \nabla^{2}f \succeq 0
+    \end{align*}
+    i.e. the Hessian of $f$ is positive semidefinite at all points.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Examples of Convex Optimization Problems}
+    Various optimisation problems are convex optimization problems:
+    \begin{itemize}
+        \item Linear Programming
+        \item Quadratic Programming with linear or convex quadratic constraints
+    \end{itemize}
+    \todo{add and understand semidefinite programming and geometric programming}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Application: Maximum Likelihood Estimation}
 \end{frame}
 
 
@@ -336,7 +371,18 @@ where
 
 \begin{frame}
     \frametitle{Barrier Method Algorithm}
-    Description of algo
+    \begin{algorithm}[H]
+        \begin{algorithmic}[1]
+            \WHILE{$ m / {t}< \varepsilon$}
+            \STATE $x \leftarrow \text{ minimise } tf_{0} + \phi
+            \text{ such that } Ax = b \text{ starting at x}$
+            \STATE $t \leftarrow \mu t$
+            \ENDWHILE
+        \end{algorithmic}
+        \caption{Barrier Method}
+        \label{alg:seq}
+    \end{algorithm}
+    The method of minimisation on line 2 is assumed to be Newton's Method.
 \end{frame}
 
 \begin{frame}
