@@ -161,6 +161,7 @@
 
 \begin{frame}
     \frametitle{Application: Maximum Likelihood Estimation}
+    basic description of mle problem
 \end{frame}
 
 
@@ -257,15 +258,66 @@
 
 \begin{frame}
     \frametitle{Newton's Method}
-    Newton's method is a method for solving unconstrained minimisation problems
-    on twice differentiable functions that makes use of the Hessian to take into
-    account local curvature information to more quickly reach the minimum.
+    Newton's method is an iterative method for solving unconstrained minimisation problems:
+    \begin{itemize}
+        \item For twice differentiable functions
+        \item Uses the Hessian to take into account local curvature information
+    \end{itemize}
+    % \\~\\
+    To find a minimum of some twice differentiable $f(x)$ with gradient $\nabla
+    f(x)$ and Hessian $H(x)$ take iterative
+    steps.
+    \\~\\
+    At point $x_{n}$, set $x_{n+1} = x_{n} + \lambda \Delta x$. $\Delta x$ is set
+    using the second order Taylor's approximation as follows:
+    \begin{align*}
+        \Delta x = \underset{\Delta x \in \rnum^{d}}{\text{argmin}}\, \,f(x + \Delta
+        x) = \underset{\Delta x \in \rnum^{d}}{\text{argmin}} \, \, f(x) + \nabla f(x)^{T}
+        \Delta x + \frac{1}{2}\Delta x^{T}H(x)\Delta x
+    \end{align*}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Newton's Method}
+    \begin{align*}
+        \Delta x = \underset{\Delta x \in \rnum^{d}}{\text{argmin}}\, \,f(x + \Delta
+        x) = \underset{\Delta x \in \rnum^{d}}{\text{argmin}} \, \, f(x) + \nabla f(x)^{T}
+        \Delta x + \frac{1}{2}\Delta x^{T}H(x)\Delta x
+    \end{align*}
+    \\~\\
+    Taking the derivative of the final expression, equating to 0 and solving for
+    $\Delta x$ we obtain:
+    \begin{align*}
+        \Delta x = -H(x)^{-1}\nabla f(x)
+    \end{align*}
+    \todo{convergence}
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Newton's Method for Equality Constrained Optimisation}
+    Newton's Method can be used to find the minima of functions according to
+    equality constraints i.e.
+    \begin{align*}
+        \underset{x}{\text{minimise }}  f(x) \\
+        \text{such that } h(x) = 0
+    \end{align*}
+    $f(x)$ twice differentiable
 \end{frame}
 
 \begin{frame}
     \frametitle{Newton's Method for Equality Constrained Optimisation}
-    \todo{here}
-\end{frame}
+    If $f$ is convex and slater's condition holds then we have strong duality
+    i.e. solution to dual is equal to solution for primal. If strong duality
+    holds then the optimal solution to the primal is the value of x that
+    minimises the lagrangaian dual.  Since x
+    $ minimizes L(x, \lambda^{\star} , v^{\star} )$ over x, it follows that its gradient
+       must vanish at xstar , i.e.,
+       therefore $0 = \nabla f(x) - \lambda \nabla h(x)$
+       $\nabla f(x) = \lambda \nabla h(x)$
+       $A \Delta x = 0$ through linearity of $A$
+       Matrix of kkt to solve
+   \end{frame}
 
 \begin{frame}
     \frametitle{Inequalities into Equalities}
@@ -401,6 +453,7 @@ where
 
 \begin{frame}
     \frametitle{Applications}
+    Logistic Regression with l2 regularisation example
 \end{frame}
 % \begin{frame}
 %     \frametitle{Strong and Weak Duality}
