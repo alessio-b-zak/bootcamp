@@ -10,6 +10,7 @@
 
 \usepackage{algorithm,algorithmic}
 
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
 
 
 \setlength {\marginparwidth }{2cm}
@@ -160,10 +161,38 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Application: Maximum Likelihood Estimation}
-    basic description of mle problem
+    \frametitle{Application: Norm Approximation}
+    An optimisation problem that occurs repeatedly in statistics is norm
+    optimisation.
+    \begin{align*}
+        \underset{x}{\text{ minimise }}\norm{Ax - b}
+    \end{align*}
+    $A \in \rnum^{m\times n}$, $x \in \rnum^{n}$ and $b \in \rnum^{b}$.
+    \\~\\
+    This problem appears in many statistical estimation tasks e.g. maximum
+    likelihood estimation for simple linear regression. This problem is convex
+    for all norms. \todo{check statement}
 \end{frame}
 
+
+\begin{frame}
+    \frametitle{Application: Regularisation and Optimisation}
+    Regularisation is an approach to constraining the parameters of the norm
+    minimisation somehow using an additive term on the objective. This appears
+    in statistics when some prior information is known about the solution to the
+    parameters i.e. through the choice of prior in MAP estimates:
+    \begin{align*}
+        \underset{x}{\text{minimise }} \norm{Ax - b}+ \gamma\norm{x}
+    \end{align*}
+    This can be reframed as a convex constrained optimisation problem i.e. for
+    $L_{2}$ regularisation we can see this as the constrained optimisation
+    problem:
+    \begin{align*}
+        &\underset{x}{\text{minimise }} \norm{Ax - b}
+        &s.t. \norm{x}^{2} - c \leq 0
+    \end{align*}
+    As in Tikhonov regression
+\end{frame}
 
 \begin{frame}
     \frametitle{Duality and the Langrangian}
@@ -210,12 +239,12 @@
     The Dual Function $L^{\star}: \rnum^{n}\times\rnum^{m} \rightarrow \rnum$ is
     the function
     \begin{align*}
-        L^{\star} = \underset{x \in D}{\text{min}}L(x, \lambda, \mu)
+        L^{\star}(\lambda, \mu) = \underset{x \in D}{\text{min}}L(x, \lambda, \mu)
     \end{align*}
     For the optimal value of the primal problem, $p^{\star}$, for all values
-    $\lambda \geq 0$
+    $\lambda \geq 0$, $\forall \mu$
     \begin{align*}
-        g(\lambda, \mu) \leq p^{\star}
+        L^{\star}(\lambda, \mu) \leq p^{\star}
     \end{align*}
     \todo{proof in notes}
 \end{frame}
@@ -232,7 +261,9 @@
         \text{maximise } \, &L^{\star}(\lambda, \mu)\\
         \text{such that } &\lambda \geq 0
     \end{align*}}
-    With optimal value $g^{\star} \leq p^{\star}$. \end{frame}
+    With optimal value $g^{\star} \leq p^{\star}$.
+    \todo{duality gap}
+\end{frame}
 
 \begin{frame}
     \frametitle{Duality}
@@ -245,6 +276,18 @@
     \\~\\
     This can be used in and of itself but can also be used to derive stopping
     conditions on algorithms aiming to solve the primal.
+    \todo{suboptimality}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Strong Duality}
+    If $g^{\star} = p^{\star}$ then we say that \textit{strong duality} holds.
+    For convex problems if the feasible region has an interior point (known as
+    Slater's condition) then strong duality holds.
+
+    If strong duality holds then the optimal solution to the primal is the value
+    of x that minimises the lagrangaian dual.
+    \todo{maths}
 \end{frame}
 
 \begin{frame}
@@ -263,22 +306,16 @@
         \item For twice differentiable functions
         \item Uses the Hessian to take into account local curvature information
     \end{itemize}
-    % \\~\\
     To find a minimum of some twice differentiable $f(x)$ with gradient $\nabla
     f(x)$ and Hessian $H(x)$ take iterative
     steps.
-    \\~\\
-    At point $x_{n}$, set $x_{n+1} = x_{n} + \lambda \Delta x$. $\Delta x$ is set
-    using the second order Taylor's approximation as follows:
-    \begin{align*}
-        \Delta x = \underset{\Delta x \in \rnum^{d}}{\text{argmin}}\, \,f(x + \Delta
-        x) = \underset{\Delta x \in \rnum^{d}}{\text{argmin}} \, \, f(x) + \nabla f(x)^{T}
-        \Delta x + \frac{1}{2}\Delta x^{T}H(x)\Delta x
-    \end{align*}
 \end{frame}
 
 \begin{frame}
     \frametitle{Newton's Method}
+    At point $x_{n}$, set $x_{n+1} = x_{n} + \lambda \Delta x$. $\Delta x$ is set
+    using the second order Taylor's approximation as follows:
+
     \begin{align*}
         \Delta x = \underset{\Delta x \in \rnum^{d}}{\text{argmin}}\, \,f(x + \Delta
         x) = \underset{\Delta x \in \rnum^{d}}{\text{argmin}} \, \, f(x) + \nabla f(x)^{T}
@@ -299,28 +336,76 @@
     Newton's Method can be used to find the minima of functions according to
     equality constraints i.e.
     \begin{align*}
-        \underset{x}{\text{minimise }}  f(x) \\
-        \text{such that } h(x) = 0
+        &\underset{x}{\text{minimise }}  f(x) \\
+        &\text{such that } A x = b
     \end{align*}
-    $f(x)$ twice differentiable
+    where $f : \rnum^{m} \rightarrow \rnum$ twice differentiable, $A \in \rnum^{n \times m} $
+    where $\Delta x$ is calculated with the $2^{\text{nd}}$ order Taylor Approximation:
+    {\footnotesize
+    \begin{align*}
+        \Delta x &= \underset{\Delta x \in \rnum^{d}}{\text{argmin}}\, \,f(x + \Delta
+        x)  \\
+        &= \, \underset{\Delta x \in \rnum^{d}}{\text{argmin}} \, \, f(x) + \nabla f(x)^{T}
+        \Delta x + \frac{1}{2}\Delta x^{T}H(x)\Delta x \\ \vspace{1mm}
+        &\,\,\,\,\,\, \text{             such that } A\, (x + \Delta x) = b
+    \end{align*}}
+    Which is a quadratic constrained minimisation problem.
 \end{frame}
 
 \begin{frame}
     \frametitle{Newton's Method for Equality Constrained Optimisation}
-    If $f$ is convex and slater's condition holds then we have strong duality
-    i.e. solution to dual is equal to solution for primal. If strong duality
-    holds then the optimal solution to the primal is the value of x that
-    minimises the lagrangaian dual.  Since x
-    $ minimizes L(x, \lambda^{\star} , v^{\star} )$ over x, it follows that its gradient
-       must vanish at xstar , i.e.,
-       therefore $0 = \nabla f(x) - \lambda \nabla h(x)$
-       $\nabla f(x) = \lambda \nabla h(x)$
-       $A \Delta x = 0$ through linearity of $A$
-       Matrix of kkt to solve
-   \end{frame}
+    If $f$ is convex (and Slater's constraint holds) then strong duality holds
+    assuming that a minimum exists at some $x^{\star}$.
+    Forming the Lagrangian for an equality constrained problem we
+    obtain:
+    \begin{align*}
+        L(x, v) = f(x) + A^{T}v
+    \end{align*}
+    Since $x^{\star}$ minimizes $L(x, v^{\star} )$ over x, it follows that
+    its gradient must vanish at $x^{\star}$ , i.e.
+    \todo{check this maths}
+    \begin{align*}
+        0 = \nabla f(x^{\star}) -  \nabla A^{T}v^{\star} \\
+        \nabla f(x^{\star}) = \nabla A^{T}v^{\star} \\
+        \nabla f(x^{\star}) = A^{T} v^{\star}
+    \end{align*}
+    \todo{convergence of newton's method}
+\end{frame}
+
+\begin{frame}
+    \todo{add linearity of A}
+    \frametitle{Newton's Method for Equality Constraints}
+    We therefore have two constraints that must be satisfied for a minimum
+    $x^{\star}$.
+    \begin{align*}
+        &\nabla f(x^{\star}) = A^{T} v^{\star} \text{ and} \\
+        &A x^{\star} = b
+    \end{align*}
+    Which for the quadratic Taylor approximation can be expressed as a matrix called a KKT system as follows:
+    \todo{kkt system}
+    \begin{align*}
+        \begin{bmatrix}
+            \nabla^{2}f(x) & A^{T} \\
+            A & 0
+        \end{bmatrix}
+        \begin{bmatrix}
+            \Delta x \\
+            w
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            -\Delta f(x) \\
+            0
+        \end{bmatrix}
+    \end{align*}
+    This can be analytically solved for $\Delta x$ providing that the hessian is
+    \todo{what the hessian needs to be}
+\end{frame}
 
 \begin{frame}
     \frametitle{Inequalities into Equalities}
+    We now know how to deal with equality constraints in convex optimisation
+    problems. Now it remains to deal with inequality constraints.
     We incorporate the inequalities into the objective using an indicator
     function:
     \begin{align*}
@@ -435,26 +520,14 @@ where
         \label{alg:seq}
     \end{algorithm}
     The method of minimisation on line 2 is assumed to be Newton's Method.
+    \todo{convergence of the barrier method and choice of starting parameters}
 \end{frame}
-
-\begin{frame}
-    \frametitle{Barrier Method Algorithm}
-    Choice of $\mu$ and $t_{0}$
-\end{frame}
-
-\begin{frame}
-    \frametitle{Convergence of Barrier Method}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Primal-Dual Methods}
-\end{frame}
-
 
 \begin{frame}
     \frametitle{Applications}
     Logistic Regression with l2 regularisation example
 \end{frame}
+
 % \begin{frame}
 %     \frametitle{Strong and Weak Duality}
 % \end{frame}
