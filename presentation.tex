@@ -3,10 +3,11 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{amsmath, bm}
+\usepackage{graphicx}
 
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{}
-
+\graphicspath{{./graphics/}}
 
 \usepackage{algorithm,algorithmic}
 
@@ -37,9 +38,9 @@
         \begin{itemize}
             \item Convex functions display theoretical properties that are
                 suited to optimisation
-            \item Solving convex optimisation allows you to place a lower bound
-                on non-convex functions
-            \item Many real world optimisations are convex
+            \item Solving convex optimisation problems allows you to place a lower bound
+                on non-convex optimisation problems
+            \item Many real world optimisation problems are convex
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -50,8 +51,13 @@
     \begin{align*}
         \theta x + (1-\theta)y \in C
     \end{align*}
-    i.e. all points on the line segment between $x$ and $y$ lie in C
-    \todo{add affine definition}
+    i.e. all points on the line segment between $x$ and $y$ lie in C.
+    \\~\\
+    A function $f : C \subseteq \rnum^{n} \rightarrow \rnum$ is convex iff $C$
+    is a convex set and $\forall x_{1}, x_{2} \in C, \forall t \in [0,1]$:
+    \begin{align*}
+        f(t x_{1} + (1-t)x_{2}) \leq t f(x_{1}) + (1-t)f(x_{2})
+    \end{align*}
 \end{frame}
 
 \begin{frame}
@@ -94,8 +100,11 @@
 
 \begin{frame}
     \frametitle{Feasible Set}
-    The feasible set $C \subseteq D =
-    \bigcap\limits_{i=0}^{m}\text{dom}(f_{i})\bigcap\limits_{j=0}^{n}\text{dom}(g_{j})$
+    The feasible set
+    \begin{align*}
+    C \subseteq D =
+    \bigcap\limits_{i=0}^{m}\text{dom}(f_{i})\bigcap\limits_{j=0}^{n}\text{dom}(g_{j})
+    \end{align*}
     is the set of all $x \in D$ such that the constraints are satisfied.
     \\~\\
     The optimal value of problem is $\text{inf} \{f_{0}(x) \, | \, x
@@ -105,14 +114,13 @@
 
 \begin{frame}
     \frametitle{Feasible Set}
-    Some important propterties of convexity are:
+    Some important properties of convexity are:
     \begin{itemize}
         \item The intersection of convex sets is convex
         \item The sublevel sets ($\{x \, | \, f(x) \leq 0 \}$) of convex
             functions are convex
-        \item The image of affine functions is convex
+        \item The preimage of affine functions is convex
     \end{itemize}
-    \todo{check affine function comment}
     Because of this the feasible set of of a convex optimisation problem is
     convex.
 \end{frame}
@@ -123,9 +131,9 @@
     \\~\\
     Any local minimum of a convex function over a convex set is a global
     minimum
-    \todo{Do this proof in the extended material}
+    \\~\\
     This means that any algorithm for a convex optimisation problem only has to
-    find a local minumum.
+    find a local minimum.
     \\~\\
     This guarantees that algorithms which are only
     guaranteed to find local minima for all problems provide global minima for
@@ -163,7 +171,7 @@
 \begin{frame}
     \frametitle{Application: Norm Approximation}
     An optimisation problem that occurs repeatedly in statistics is norm
-    optimisation.
+    approximation.
     \begin{align*}
         \underset{x}{\text{ minimise }}\norm{Ax - b}
     \end{align*}
@@ -171,7 +179,7 @@
     \\~\\
     This problem appears in many statistical estimation tasks e.g. maximum
     likelihood estimation for simple linear regression. This problem is convex
-    for all norms. \todo{check statement}
+    for all norms.
 \end{frame}
 
 
@@ -208,7 +216,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{The Lagrangian}
+    \frametitle{Duality}
     Consider some optimisation problem:
     {\footnotesize
     \begin{align*}
@@ -241,10 +249,14 @@
     \begin{align*}
         L^{\star}(\lambda, \mu) = \underset{x \in D}{\text{min}}L(x, \lambda, \mu)
     \end{align*}
-    For the optimal value of the primal problem, $p^{\star}$, for all values
+    For any feasible point of the primal $x$, for all values
     $\lambda \geq 0$, $\forall \mu$
     \begin{align*}
-        L^{\star}(\lambda, \mu) \leq p^{\star}
+        L^{\star}(\lambda, \mu) \leq f_{0}(x)
+    \end{align*}
+    We call $(\lambda, \mu)$ dual feasible iff
+    \begin{align*}
+        \lambda \geq 0 \text{ and } L^{\star}(\lambda, \mu) > -\infty
     \end{align*}
     \todo{proof in notes}
 \end{frame}
@@ -261,8 +273,12 @@
         \text{maximise } \, &L^{\star}(\lambda, \mu)\\
         \text{such that } &\lambda \geq 0
     \end{align*}}
-    With optimal value $g^{\star} \leq p^{\star}$.
-    \todo{duality gap}
+    Dual feasible points are points that are (thankfully) feasible for the dual
+    problem.
+
+    With optimal value $g^{\star}$ which is less than $f_{0}(x)$ for any
+    $x$ in the feasible set for the primal including the optimal value i.e.
+    $g^{\star} \leq p^{\star}$.
 \end{frame}
 
 \begin{frame}
@@ -275,19 +291,28 @@
     harder to solve.
     \\~\\
     This can be used in and of itself but can also be used to derive stopping
-    conditions on algorithms aiming to solve the primal.
-    \todo{suboptimality}
+    conditions on algorithms aiming to solve the primal e.g.
+    \\~\\
+    for a given
+    feasible point $x$ we know that the solution to the primal $p^{\star}$ lies
+    between $f_{0}(x)$ and the solution to the dual $g^{\star}$. We therefore know that $x$
+    is at most ($f_{0}(x) - g^{\star}$)-suboptimal.
 \end{frame}
 
 \begin{frame}
     \frametitle{Strong Duality}
-    If $g^{\star} = p^{\star}$ then we say that \textit{strong duality} holds.
+    If the solution to the primal is the same as the solution to the dual
+    then we say that \textit{strong duality} holds.
+    \\~\\
     For convex problems if the feasible region has an interior point (known as
     Slater's condition) then strong duality holds.
-
-    If strong duality holds then the optimal solution to the primal is the value
-    of x that minimises the lagrangaian dual.
-    \todo{maths}
+    \\~\\
+    If strong duality holds then the solution to the primal $x^{\star}$
+    maximises the Lagrangian with respect to the solution of the dual i.e.
+    $\lambda^{\star}$ and $\mu^{\star}$ i.e.
+    \begin{align*}
+        x^{\star} = \underset{x}{\text{min }} L(x, \lambda^{\star}, \mu^{\star})
+    \end{align*}
 \end{frame}
 
 \begin{frame}
@@ -307,7 +332,7 @@
         \item Uses the Hessian to take into account local curvature information
     \end{itemize}
     To find a minimum of some twice differentiable $f(x)$ with gradient $\nabla
-    f(x)$ and Hessian $H(x)$ take iterative
+    f(x)$ and Hessian $\nabla^{2}f(x)$ take iterative
     steps.
 \end{frame}
 
@@ -319,15 +344,14 @@
     \begin{align*}
         \Delta x = \underset{\Delta x \in \rnum^{d}}{\text{argmin}}\, \,f(x + \Delta
         x) = \underset{\Delta x \in \rnum^{d}}{\text{argmin}} \, \, f(x) + \nabla f(x)^{T}
-        \Delta x + \frac{1}{2}\Delta x^{T}H(x)\Delta x
+        \Delta x + \frac{1}{2}\Delta x^{T}\nabla^{2}f(x)\Delta x
     \end{align*}
     \\~\\
     Taking the derivative of the final expression, equating to 0 and solving for
     $\Delta x$ we obtain:
     \begin{align*}
-        \Delta x = -H(x)^{-1}\nabla f(x)
+        \Delta x = -(\nabla^{2}f(x))^{-1}\nabla f(x)
     \end{align*}
-    \todo{convergence}
 \end{frame}
 
 
@@ -356,6 +380,7 @@
     \frametitle{Newton's Method for Equality Constrained Optimisation}
     If $f$ is convex (and Slater's constraint holds) then strong duality holds
     assuming that a minimum exists at some $x^{\star}$.
+    \\~\\
     Forming the Lagrangian for an equality constrained problem we
     obtain:
     \begin{align*}
@@ -363,26 +388,28 @@
     \end{align*}
     Since $x^{\star}$ minimizes $L(x, v^{\star} )$ over x, it follows that
     its gradient must vanish at $x^{\star}$ , i.e.
-    \todo{check this maths}
     \begin{align*}
         0 = \nabla f(x^{\star}) -  \nabla A^{T}v^{\star} \\
         \nabla f(x^{\star}) = \nabla A^{T}v^{\star} \\
         \nabla f(x^{\star}) = A^{T} v^{\star}
     \end{align*}
-    \todo{convergence of newton's method}
 \end{frame}
 
 \begin{frame}
-    \todo{add linearity of A}
-    \frametitle{Newton's Method for Equality Constraints}
-    We therefore have two constraints that must be satisfied for a minimum
+    \frametitle{Newton's Method for Equality Constrained Optimisation}
+    We therefore have two constraints that must be satisfied for minimum
     $x^{\star}$.
     \begin{align*}
         &\nabla f(x^{\star}) = A^{T} v^{\star} \text{ and} \\
         &A x^{\star} = b
     \end{align*}
-    Which for the quadratic Taylor approximation can be expressed as a matrix called a KKT system as follows:
-    \todo{kkt system}
+    Replacing $x^{\star}$ with $x + \Delta x$ using the $2^{\text{nd}}$ order
+    Taylor approximation of the original $f$ the constraints become:
+    \begin{align*}
+        &\nabla^{2}f(x)\Delta x + \nabla f(x) = A^{T}v \text{ and}\\
+        &A(x + \Delta x) = b
+    \end{align*}
+    Which, if $Ax = b$ gives rise to the KKT system:
     \begin{align*}
         \begin{bmatrix}
             \nabla^{2}f(x) & A^{T} \\
@@ -390,7 +417,7 @@
         \end{bmatrix}
         \begin{bmatrix}
             \Delta x \\
-            w
+            v
         \end{bmatrix}
         =
         \begin{bmatrix}
@@ -398,12 +425,12 @@
             0
         \end{bmatrix}
     \end{align*}
-    This can be analytically solved for $\Delta x$ providing that the hessian is
-    \todo{what the hessian needs to be}
+    This can be analytically solved for $\Delta x$ if $f$ is strictly convex as
+    then the Hessian of $f$ is full rank and thus invertible.
 \end{frame}
 
 \begin{frame}
-    \frametitle{Inequalities into Equalities}
+    \frametitle{Solving Inequality Constrained Optimisation}
     We now know how to deal with equality constraints in convex optimisation
     problems. Now it remains to deal with inequality constraints.
     We incorporate the inequalities into the objective using an indicator
@@ -411,7 +438,7 @@
     \begin{align*}
         \text{minimise } \, &f_{0} +
         \sum_{i=1}^{m}\mathcal{I}\_\left(f_{i}\,(x)\right )\\
-        \text{such that } & \mathbf{A}\mathbf{x} =\mathbf{b}
+        \text{such that } & Ax =b
     \end{align*}
 
 where
@@ -426,7 +453,7 @@ where
 \end{frame}
 
 \begin{frame}
-    \frametitle{Inequalities into Equalities}
+    \frametitle{Solving Inequality Constrained Optimisation}
     This objective is not differentiable and therefore Newton's method cannot be
     applied.
     \\~\\
@@ -445,17 +472,26 @@ where
     \begin{align*}
         \text{minimise } \, &t f_{0} +
         \varphi(x)\\
-        \text{such that } & \mathbf{A}\mathbf{x} =\mathbf{b}
+        \text{such that } & Ax =b
     \end{align*}
     where
     \begin{align*}
         \varphi(x) = - \sum\limits_{i=1}^{m}\text{log}(-f_{i}(x))
     \end{align*}
+    where
+    \begin{align*}
+        \nabla \phi(x) = \sum\limits_{i=1}^{m}\frac{1}{-f_{i}(x)}\nabla f_{i}(x)
+    \end{align*}
 \end{frame}
 
 \begin{frame}
     \frametitle{Log Barrier Function}
-    \todo{picture of log barrier}
+    \begin{figure}[t]
+        \centering
+        \includegraphics[scale=0.6]{barrier_function}
+        \caption{log barrier function for increasing values of $t$}
+        \label{fig:logbar}
+    \end{figure}
     The log barrier function is twice continuously differentiable and convex
     and therefore is amenable to Newton's method.
 \end{frame}
@@ -467,15 +503,50 @@ where
     $t > 0$ obtainable via Newton's method, we can define the central path,
     $x^{\star}(t)$ as the solution to the minimisation problem for a given
     $t$.
+    \\~\\
+    From the KKT conditions a dual feasible point for every
+    $x^{\star}(t)$ can be obtained which lower bounds the optimal value for
+    the original problem.
 \end{frame}
 
 \begin{frame}
     \frametitle{Central Path}
-    From the KKT conditions a dual feasible point for every
-    $x^{\star}(t)$ can be obtained which lower bounds the optimal value for
-    the original problem.
-    \\~\\
-    For a given $x^{\star}(t)$, $f_{0}(x^{\star}(t)$ is no more than
+    Points on the central path are characterised by the KKT conditions:
+    {\footnotesize
+    \begin{align*}
+        \exists \hat{v}\,\, s.t.  \, \, \,\, \, \, \,
+        0 &= t\nabla f_{0}(x^{\star}(t)) + \nabla\phi(x^{\star}(t)) +
+        A^{T}\hat{v} \\
+        &= t \nabla f_{0}(x^{\star}(t)) +
+        \sum\limits_{i=1}^{m}\frac{1}{-f_{i}(x^{\star}(t))}\nabla
+        f_{i}(x^{\star}(t)) + A^{T}\hat{v} \,\,\,\, (\star)
+    \end{align*}}
+    {\footnotesize
+    \begin{align*}
+        \hspace{-50mm}\text{Let }\hspace{5mm}
+        \lambda_{i}^{\star}(t) = -\frac{1}{t f_{i}(x^{\star}(t))} \text{ and }
+        v^{\star}(t) = \hat{v} / {t}
+    \end{align*}}
+    We claim that these are dual feasible points for the dual function
+    {\footnotesize
+        \begin{align*}
+            g(\lambda(t), v(t)) &= f_{0}(x^{\star}(t))
+            + \sum\limits_{i=1}^{m}\lambda_{i}(t)f_{i}(x^{\star}(t))
+            + v(t)^{T}(Ax^{\star}(t) - b) \\
+        \end{align*}
+    }
+\end{frame}
+
+\begin{frame}
+    \frametitle{Central Path}
+    \begin{figure}[t]
+        \centering
+        \includegraphics[scale=0.25]{central_path}
+        \caption{Traversing the central path to the optimal value}
+        \label{fig:<+label+>}
+    \end{figure}
+    \vspace{-5mm}
+    For a given $x^{\star}(t)$, $f_{0}(x^{\star}(t))$ is no more than
     $\frac{m}{t}$ away from the optimal value for the original primal problem.
     \\~\\
     As $t \rightarrow \infty$ the central path solution will tend to
@@ -490,11 +561,10 @@ where
     \begin{align*}
         \text{minimise } \, &\left(\frac{m}{\varepsilon}\right)\,f_{0} +
         \varphi(x)\\
-        \text{such that } & \mathbf{A}\mathbf{x} =\mathbf{b}
+        \text{such that } & Ax =b
     \end{align*}
     This can be solved using Newton's method however it does not have good
     practical performance due to numerical instability.
-    \todo{eps needs to be big}
 \end{frame}
 
 \begin{frame}
@@ -520,13 +590,53 @@ where
         \label{alg:seq}
     \end{algorithm}
     The method of minimisation on line 2 is assumed to be Newton's Method.
-    \todo{convergence of the barrier method and choice of starting parameters}
+    \\~\\
+    The choice of $\mu$ dictates how many of the outer non-Netwon's method loop
+    occur. If this is too high then Newton's method might take too long to
+    converge. If $t^{(0)}$ is too small then many outer iterations may be
+    needed.
 \end{frame}
 
+
 \begin{frame}
-    \frametitle{Applications}
-    Logistic Regression with l2 regularisation example
+    \centering
+    Thanks \\
+    Any Questions?
 \end{frame}
+
+% \begin{frame}
+%     \frametitle{Applications: Regularised Logistic Regression}
+%     There is no closed form solution for the parameters of logistic regression
+%     and therefore a numerical method must be used.
+%     \\~\\
+%     One of the aims of regularisation is to ensure the size of the parameters
+%     remain small.
+%     \\~\\
+%     This can be reformulated as a constrained minimisation problem.
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Applications: Regularised Logistic Regression}
+%     With data $\mathbf{x}_{1},\dots,\mathbf{x}_{n} \in \rnum^{d}$ and class
+%     variables $y_{1}, \dots, y_{n} \in \{0, 1\}$.
+%     Model $p(y| X = x)$ as:
+%     \begin{align*}
+%         p(y | X = \textbf{x}) = \frac{1}{1 + e^{-y_{i} \cdot \langle \textbf{w} ,
+%                 \textbf{x}'
+%         \rangle}}
+%     \end{align*}
+%     where $\textbf{w} \in \rnum^{d+1}$ and $\textbf{x}' = [\textbf{x}, 1]^{T}$
+%     \\~\\
+%     Doing MLE and taking the negative log-likelihood we obtain the optimisation
+%     problem
+%     \begin{align*}
+%        l
+%     \end{align*}
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Applications: Regularised Logistic Regression}
+% \end{frame}
 
 % \begin{frame}
 %     \frametitle{Strong and Weak Duality}
