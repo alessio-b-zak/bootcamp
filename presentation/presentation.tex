@@ -4,6 +4,9 @@
 \usepackage{mathtools}
 \usepackage{amsmath, bm}
 \usepackage{graphicx}
+\usepackage[style=ieee]{biblatex}
+\addbibresource{mybib.bib}
+
 
 \usepackage{todonotes}
 \presetkeys{todonotes}{inline}{}
@@ -253,7 +256,7 @@
 \end{frame}
 
 \begin{frame}
-    \frametitle{Duality and the Langrangian}
+    \frametitle{Duality and the Lagrangian}
     For any optimisation problem there is a related problem known as the dual
     (with the original problem known as the primal).
     \\~\\
@@ -479,8 +482,9 @@
 
 \begin{frame}
     \frametitle{Newton's Method for Equality Constrained Optimisation}
-    Newton's method has quadratic convergence (faster than gradient descent)
-    even for the equality constrained version however it has high complexity and
+    Newton's method has quadratic convergence for a strictly convex $f$ and
+    Lipschitz continuous Hessian (faster than gradient descent)
+    even for the equality constrained version, however it has high complexity and
     memory usage for each iteration as it must store the whole Hessian
     $(O(n^{2}))$ and calculate its inverse $(O(n^{3}))$.
     \\~\\
@@ -753,6 +757,11 @@ where
             inequalities into the objective and iteratively apply Newton's
             method to solve inequality constrained problems.
     \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \nocite{*}
+    \printbibliography
 \end{frame}
 
 \begin{frame}
