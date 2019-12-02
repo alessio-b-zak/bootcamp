@@ -1,0 +1,121 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+
+\let\oldnorm\norm   % <-- Store original \norm as \oldnorm
+\let\norm\undefined % <-- "Undefine" \norm
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+\def\parw{\ensuremath{\textbf{w}}}
+
+\def\exp{\ensuremath{\mathbb{E}}}
+\def\sinn{\text{sin}}
+\def\coss{\text{cos}}
+
+\def\phix{\ensuremath{\phi(\textbf{X})}}
+
+\usepackage[margin=1.00in]{geometry}
+\usepackage{bm}
+\usepackage{cite}
+\newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+
+\def\bolxi{\ensuremath{\textbf{x}_{i}}}
+\usepackage{titling}
+\usepackage{indentfirst}
+\usepackage[textwidth=3.7cm]{todonotes}
+\setlength{\marginparwidth}{3.7cm}
+\usepackage{etoolbox}
+\lstset{breaklines}
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+
+\def\rnum{\mathbb{R}}
+
+
+\newtheorem*{definition}{Definition}
+
+
+
+\usepackage[compact]{titlesec}         % you need this package
+\titlespacing{\section}{1pt}{1pt}{1pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\AtBeginDocument{%                     % this will reduce spaces between parts (above and below) of texts within a (sub)section to 0pt, for example - like between an 'eqnarray' and text
+    \setlength\abovedisplayskip{8pt}
+    \setlength\belowdisplayskip{0pt}
+}
+
+\setlength{\droptitle}{-20mm} % This is your set scream
+\setlength{\parindent}{1em}
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0in}
+
+\date{}
+\author{Alessio Zakaria}
+\title{Preliminary Definitions\vspace{-30mm}}
+\begin{document}
+\maketitle
+\begin{definition}
+A matrix, $A \in \rnum^{m \times n}$ is positive semidefinite if:
+\begin{align*}
+    \forall     x \in \rnum^{n}, \, x^{T}Ax \geq 0
+\end{align*}
+\end{definition}
+\begin{definition}
+A function $f$ is affine if
+\begin{align*}
+    f(v) = Av + b
+\end{align*} for some matrix $A$ and some vector $b$.
+\end{definition}
+
+\begin{definition}
+    For some minimisation problem with objective function $f: \rnum^{n} \rightarrow \rnum$ and inequality
+    constraints $g_{i}: \rnum^{n} \rightarrow \rnum$ and equality constraints
+    $h_{j}: \rnum^{n} \rightarrow \rnum$ that are continuously differentiable at the optimal solution $x^{\star}$ the KKT conditions are (providing some constraints hold):
+    $\exists \, \, \mu_{i} \text{ and }  \lambda_{i}\text{ such that}$
+    \begin{align*}
+        \nabla f(x^{\star}) + \sum\limits_{i=1}^{m}\mu_{i} \nabla g_{i}(x^{\star}) &+ \sum\limits_{j=1}^{l}\lambda_{j}\nabla h_{j}(x^{\star}) = 0 \,\,\,\, \,\, \text{(stationarity)}\\
+        &g_{i}(x^{\star}) \leq 0 \\
+        &h_{j}(x^{\star}) = 0 \\
+        &\mu_{i} \geq 0 \\
+        &\mu_{i}g_{i}(x^{\star}) = 0
+    \end{align*}
+
+    \label{a}
+\end{definition}
+
+
+\begin{definition}
+    Rates of convergence
+    \label{t}
+\end{definition}
+
+\begin{definition}
+    Multivariate Taylor's Theorem
+    \label{k}
+\end{definition}
+
+\begin{definition}
+    Interior Point
+    \label{<+label+>}
+\end{definition}
+
+\begin{definition}
+    Linear Programming
+    \label{m}
+\end{definition}
+
+\begin{definition}
+    Quadratic Constrained Programming
+    \label{
+    }
+\end{definition}
+
+\end{document}
