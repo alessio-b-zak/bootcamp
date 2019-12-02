@@ -28,6 +28,15 @@
 
 \begin{frame}
     \frametitle{Structure}
+    \begin{itemize}
+        \item Convexity and Convex Optimisation
+        \item Duality
+        \item Solving Convex Optimisation Problems
+            \begin{itemize}
+                \item Newton's Method for Equality Constraints
+                \item Barrier Method for Inequality Constraints
+            \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -67,7 +76,8 @@
 \begin{frame}
     \frametitle{Convexity}
     A function $f : C \subseteq \rnum^{n} \rightarrow \rnum$ is convex iff $C$
-    is a convex set and $\forall x_{1}, x_{2} \in C, \forall t \in [0,1]$:
+    is a convex set and $\forall x_{1}, x_{2} \in C, \forall t \in [0,1]$
+    (strict if strict equality):
     \begin{align*}
         f(t x_{1} + (1-t)x_{2}) \leq t f(x_{1}) + (1-t)f(x_{2})
     \end{align*}
@@ -204,8 +214,8 @@
     \begin{itemize}
         \item Linear Programming
         \item Quadratic Programming with linear or convex quadratic constraints
+        \item Least Squares
     \end{itemize}
-    \todo{add and understand semidefinite programming and geometric programming}
 \end{frame}
 
 \begin{frame}
@@ -298,7 +308,6 @@
     \begin{align*}
         \lambda \geq 0 \text{ and } L^{\star}(\lambda, \mu) > -\infty
     \end{align*}
-    \todo{proof in notes}
 \end{frame}
 
 \begin{frame}
@@ -334,7 +343,7 @@
     This can be used in and of itself but can also be used to derive stopping
     conditions on algorithms aiming to solve the primal e.g.
     \\~\\
-    for a given
+    For a given
     feasible point $x$ we know that the solution to the primal $p^{\star}$ lies
     between $f_{0}(x)$ and the solution to the dual $g^{\star}$. We therefore know that $x$
     is at most ($f_{0}(x) - g^{\star}$)-suboptimal.
@@ -546,7 +555,7 @@ where
     \\~\\
     Assuming the log barrier formalisation has a unique solution for all
     $t > 0$ obtainable via Newton's method, we can define the central path,
-    $x^{\star}(t)$ as the solution to the minimisation problem for a given
+    $x^{\star}(t)$ as the \textit{unique} solution to the minimisation problem for a given
     $t$.
     \\~\\
     From the KKT conditions a dual feasible point for every
@@ -620,6 +629,13 @@ where
     \frametitle{Central Path}
     The other condition for dual feasibility is that $\lambda^{\star}(t) >
     0$.
+    \\~\\
+    As $f_{i}(x^{\star}) < 0$ for $x^{\star}$ then
+    \begin{align*}
+        -\frac{1}{f_{i}(x^{\star})} > 0
+    \end{align*}
+    And therefore $\lambda^{\star}(t)$ and
+    $v^{\star}(t)$ are dual feasible and the suboptimality bound holds.
 \end{frame}
 
 
@@ -681,21 +697,37 @@ where
     occur. If this is too high then Newton's method might take too long to
     converge. If $t^{(0)}$ is too small then many outer iterations may be
     needed.
+    \\~\\
+    The Barrier Method is quite robust to the choice of these in practice.
 \end{frame}
 
 
 \begin{frame}
     \frametitle{Interior Point Methods}
     There exist more advanced interior point methods that are more efficient
-    than the Barrier method.
+    for higher accuracy than the Barrier method.
     \\~\\
     Primal-Dual methods are an active area of research for non-linear convex
     problems that are more efficient than Barrier methods.
-    \todo{explain briefly primal dual}
+    \\~\\
+    Primal-Dual methods take one Newton step instead of the separation between
+    the outer loop of the Barrier Method and updating the inner iterations of
+    Newton's method.
 \end{frame}
 
 \begin{frame}
     \frametitle{Summary}
+    In this talk we have:
+    \begin{itemize}
+        \item Learnt what a convex optimisation problem is
+        \item Learnt about duality and how convex optimisation can be used to lower bound all
+            optimisation problems
+        \item Learnt about how Newton's Method can be adapted to solve equality
+            constrained problems
+        \item Learnt about how the Barrier method can be used to incorporate
+            inequalities into the objective and iteratively apply Newton's
+            method to solve inequality constrained problems.
+    \end{itemize}
 \end{frame}
 
 \begin{frame}
