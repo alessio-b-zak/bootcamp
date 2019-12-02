@@ -27,6 +27,10 @@
 \end{frame}
 
 \begin{frame}
+    \frametitle{Structure}
+\end{frame}
+
+\begin{frame}
     \frametitle{Convex Optimisation?}
     \begin{itemize}
     \item What is it?
@@ -52,12 +56,27 @@
         \theta x + (1-\theta)y \in C
     \end{align*}
     i.e. all points on the line segment between $x$ and $y$ lie in C.
-    \\~\\
+    \begin{figure}[t]
+        \centering
+        \includegraphics[scale=0.05]{polygon}
+        \caption{Points in a convex set}
+        \label{fig:h}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Convexity}
     A function $f : C \subseteq \rnum^{n} \rightarrow \rnum$ is convex iff $C$
     is a convex set and $\forall x_{1}, x_{2} \in C, \forall t \in [0,1]$:
     \begin{align*}
         f(t x_{1} + (1-t)x_{2}) \leq t f(x_{1}) + (1-t)f(x_{2})
     \end{align*}
+    \begin{figure}[t]
+        \centering
+        \includegraphics[scale=0.225]{function}
+        \caption{A convex function}
+        \label{fig:function}
+    \end{figure}
 \end{frame}
 
 \begin{frame}
@@ -107,9 +126,12 @@
     \end{align*}
     is the set of all $x \in D$ such that the constraints are satisfied.
     \\~\\
-    The optimal value of problem is $\text{inf} \{f_{0}(x) \, | \, x
+    The \textit{optimal value} of problem is $\text{inf} \{f_{0}(x) \, | \, x
     \in C \}$. If there is no lower bound the optimisation problem has optimal
     value $-\infty$.
+    \\~\\
+    The point in the feasible set, $x \in C$, that attains the optimal value
+    under the objective is called the \textit{optimal solution}.
 \end{frame}
 
 \begin{frame}
@@ -149,6 +171,23 @@
         f(y) \geq f(x) + \nabla f(x)^{T}(y-x)
     \end{align*}
     i.e. the tangent plane underapproximates the function at every point.
+    \begin{figure}[t]
+        \centering
+        \includegraphics[scale=0.2]{tangent}
+        \caption{Tangent line to a convex function}
+        \label{fig:tangent}
+    \end{figure}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Characterisations of Convexity}
+    First Order Characterisation of Convexity: $f : \rnum^{n} \rightarrow \rnum$
+    differentiable is convex iff \textbf{dom}$(f)$ is convex and $\forall \, x
+    \, y \in$ \textbf{dom}$(f)$:
+    \begin{align*}
+        f(y) \geq f(x) + \nabla f(x)^{T}(y-x)
+    \end{align*}
+    i.e. the tangent plane underapproximates the function at every point.
     \\~\\
     Second Order Characterisation of Convexity: $f : \rnum^{n} \rightarrow
     \rnum$ twice differentiable is convex iff \textbf{dom}$(f)$ is convex and
@@ -157,6 +196,7 @@
     \end{align*}
     i.e. the Hessian of $f$ is positive semidefinite at all points.
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Examples of Convex Optimization Problems}
@@ -273,12 +313,13 @@
         \text{maximise } \, &L^{\star}(\lambda, \mu)\\
         \text{such that } &\lambda \geq 0
     \end{align*}}
+    \hspace{-1mm}With optimal value $g^{\star}$ which is less than $f_{0}(x)$ for any
+    $x$ in the feasible set for the primal including the optimal value i.e.
+    $g^{\star} \leq p^{\star}$.
+    \\~\\
     Dual feasible points are points that are (thankfully) feasible for the dual
     problem.
 
-    With optimal value $g^{\star}$ which is less than $f_{0}(x)$ for any
-    $x$ in the feasible set for the primal including the optimal value i.e.
-    $g^{\star} \leq p^{\star}$.
 \end{frame}
 
 \begin{frame}
@@ -499,6 +540,10 @@ where
 
 \begin{frame}
     \frametitle{Central Path}
+    Before applying Newton's method however, it is useful to know what value we
+    should set $t$ to. This can be found through analysing the \textit{central
+    path}.
+    \\~\\
     Assuming the log barrier formalisation has a unique solution for all
     $t > 0$ obtainable via Newton's method, we can define the central path,
     $x^{\star}(t)$ as the solution to the minimisation problem for a given
@@ -511,6 +556,50 @@ where
 
 \begin{frame}
     \frametitle{Central Path}
+    Let
+    \begin{align*}
+        \lambda_{i}^{\star}(t) = -\frac{1}{t f_{i}(x^{\star}(t))} \text{ and }
+        v^{\star}(t) = \hat{v} / {t}
+    \end{align*}
+    We claim that these are dual feasible points for the dual function
+    \begin{align*}
+        g(\lambda(t), v(t)) &= \underset{x(t)}{\text{min }}f_{0}(x(t))
+        + \sum\limits_{i=1}^{m}\lambda_{i}(t)f_{i}(x(t))
+        + v(t)^{T}(Ax(t) - b) \\
+    \end{align*}
+    and that $x^{\star}(t)$ is the value of $x(t)$ that minimises the above for
+    $\lambda_{i}^{\star}(t)$ and $v^{\star}(t)$.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Central Path}
+    If this is true then
+    {\footnotesize
+        \begin{align*}
+            g(\lambda^{\star}(t), v^{\star}(t)) &= f_{0}(x^{\star}(t))
+            + \sum\limits_{i=1}^{m}\lambda_{i}^{\star}(t)f_{i}(x^{\star}(t))
+            + v^{\star}(t)^{T}(Ax^{\star}(t) - b) \\
+        \end{align*}
+    }
+    \vspace{-10mm}
+    \begin{align*}
+        \hspace{-10mm}\text{As }\hspace{5mm}  Ax^{\star}(t) = b \text{ and } \lambda_{i}^{\star}(t)f_{i}(x^{\star}(t))
+        = -\frac{f_{i}(x^{\star}(t))}{t f_{i}(x^{\star}(t))}
+        = -\frac{1}{t}
+    \end{align*}
+    \begin{align*}
+        g(\lambda^{\star}(t), v^{\star}(t)) &= f_{0}(x^{\star}(t)) -
+        \frac{m}{t}
+    \end{align*}
+    This means that for a given $x^{\star}(t)$, $f_{0}(x^{\star}(t))$ is no more than
+    $\frac{m}{t}$ away from the optimal value for the original primal problem.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Central Path}
+    We claimed that $\lambda^{\star}(t)$ and $v^{\star}(t)$ were dual feasible
+    points for the dual. To show this observe the following:
+    \\~\\
     Points on the central path are characterised by the KKT conditions:
     {\footnotesize
     \begin{align*}
@@ -519,23 +608,20 @@ where
         A^{T}\hat{v} \\
         &= t \nabla f_{0}(x^{\star}(t)) +
         \sum\limits_{i=1}^{m}\frac{1}{-f_{i}(x^{\star}(t))}\nabla
-        f_{i}(x^{\star}(t)) + A^{T}\hat{v} \,\,\,\, (\star)
+        f_{i}(x^{\star}(t)) + A^{T}\hat{v}
     \end{align*}}
-    {\footnotesize
-    \begin{align*}
-        \hspace{-50mm}\text{Let }\hspace{5mm}
-        \lambda_{i}^{\star}(t) = -\frac{1}{t f_{i}(x^{\star}(t))} \text{ and }
-        v^{\star}(t) = \hat{v} / {t}
-    \end{align*}}
-    We claim that these are dual feasible points for the dual function
-    {\footnotesize
-        \begin{align*}
-            g(\lambda(t), v(t)) &= f_{0}(x^{\star}(t))
-            + \sum\limits_{i=1}^{m}\lambda_{i}(t)f_{i}(x^{\star}(t))
-            + v(t)^{T}(Ax^{\star}(t) - b) \\
-        \end{align*}
-    }
+    This can be observed to be the derivative of the Lagrangian where $\lambda =
+    \lambda^{\star}(t)$ and $v = v^{\star}(t)$. As this equals 0 this means that
+    the dual function is bounded below for $\lambda^{\star}(t)$ and
+    $v^{\star}(t)$.
 \end{frame}
+
+\begin{frame}
+    \frametitle{Central Path}
+    The other condition for dual feasibility is that $\lambda^{\star}(t) >
+    0$.
+\end{frame}
+
 
 \begin{frame}
     \frametitle{Central Path}
@@ -543,12 +629,9 @@ where
         \centering
         \includegraphics[scale=0.25]{central_path}
         \caption{Traversing the central path to the optimal value}
-        \label{fig:<+label+>}
+        \label{fig:central path}
     \end{figure}
     \vspace{-5mm}
-    For a given $x^{\star}(t)$, $f_{0}(x^{\star}(t))$ is no more than
-    $\frac{m}{t}$ away from the optimal value for the original primal problem.
-    \\~\\
     As $t \rightarrow \infty$ the central path solution will tend to
     $p^{\star}$.
 \end{frame}
@@ -564,17 +647,20 @@ where
         \text{such that } & Ax =b
     \end{align*}
     This can be solved using Newton's method however it does not have good
-    practical performance due to numerical instability.
+    practical performance due to numerical instability as when  $\varepsilon$
+    is large then the value of the objectives Hessian varies rapidly near the
+    boundaries of the feasible set.
 \end{frame}
 
 \begin{frame}
     \frametitle{Barrier Method}
-    The barrier method avoids the problems of the previous method which solves a
+    The barrier method avoids the problems of the previous method by solving a
     series of minimisation problems.
     \\~\\
     The barrier method computes $x^{\star}(t)$ for increasing values of
     $t$ using Newton's method until $t \geq \frac{m}{\varepsilon}$.
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Barrier Method Algorithm}
@@ -599,11 +685,24 @@ where
 
 
 \begin{frame}
+    \frametitle{Interior Point Methods}
+    There exist more advanced interior point methods that are more efficient
+    than the Barrier method.
+    \\~\\
+    Primal-Dual methods are an active area of research for non-linear convex
+    problems that are more efficient than Barrier methods.
+    \todo{explain briefly primal dual}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Summary}
+\end{frame}
+
+\begin{frame}
     \centering
     Thanks \\
     Any Questions?
 \end{frame}
-
 % \begin{frame}
 %     \frametitle{Applications: Regularised Logistic Regression}
 %     There is no closed form solution for the parameters of logistic regression
