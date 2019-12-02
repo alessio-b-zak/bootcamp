@@ -40,6 +40,7 @@
 
 
 \newtheorem*{definition}{Definition}
+\newtheorem*{theorem}{Theorem}
 
 
 
@@ -53,9 +54,9 @@
 }
 
 \setlength{\droptitle}{-20mm} % This is your set scream
-\setlength{\parindent}{1em}
-\setlength{\parskip}{0.8em}
-\setlength{\parindent}{0in}
+\setlength{\parindent}{2.8em}
+\setlength{\parskip}{1.8em}
+\setlength{\parindent}{1.8in}
 
 \date{}
 \author{Alessio Zakaria}
@@ -81,11 +82,11 @@ A function $f$ is affine if
     $h_{j}: \rnum^{n} \rightarrow \rnum$ that are continuously differentiable at the optimal solution $x^{\star}$ the KKT conditions are (providing some constraints hold):
     $\exists \, \, \mu_{i} \text{ and }  \lambda_{i}\text{ such that}$
     \begin{align*}
-        \nabla f(x^{\star}) + \sum\limits_{i=1}^{m}\mu_{i} \nabla g_{i}(x^{\star}) &+ \sum\limits_{j=1}^{l}\lambda_{j}\nabla h_{j}(x^{\star}) = 0 \,\,\,\, \,\, \text{(stationarity)}\\
-        &g_{i}(x^{\star}) \leq 0 \\
-        &h_{j}(x^{\star}) = 0 \\
-        &\mu_{i} \geq 0 \\
-        &\mu_{i}g_{i}(x^{\star}) = 0
+        &\nabla f(x^{\star}) + \sum\limits_{i=1}^{m}\mu_{i} \nabla g_{i}(x^{\star}) + \sum\limits_{j=1}^{l}\lambda_{j}\nabla h_{j}(x^{\star}) = 0 \,\,\,\, \,\, \text{(stationarity)}\\
+        &g_{i}(x^{\star}) \leq 0 \,\,\,\,\,\,\,\,\, \text{(Primal Feasibility)}\\
+        &h_{j}(x^{\star}) = 0 \,\,\,\,\,\,\,\,\,\,\, \text{(Primal Feasibility)}\\
+        &\mu_{i} \geq 0 \,\,\,\,\,\,\,\,\,\,\, \text{(Dual Feasibility)}\\
+        &\mu_{i}g_{i}(x^{\star}) = 0 \,\,\,\,\,\,\,\,\,\,\, \text{(Complementary Slackness)}
     \end{align*}
 
     \label{a}
@@ -93,29 +94,61 @@ A function $f$ is affine if
 
 
 \begin{definition}
-    Rates of convergence
-    \label{t}
-\end{definition}
-
-\begin{definition}
-    Multivariate Taylor's Theorem
-    \label{k}
-\end{definition}
-
-\begin{definition}
-    Interior Point
+    A point $x \in \rnum^{n}$ is a critical point of some $f : \rnum^{n \times m} \rightarrow \rnum$ if:
+    \begin{align*}
+        \nabla f(x) = \textbf{0}
+    \end{align*}
     \label{<+label+>}
 \end{definition}
 
+\begin{theorem}
+    Fermat's Theorem (critical points): If $x \in \rnum^{n}$ is a local minima of some function $f : \rnum^{n} \rightarrow \rnum$ then:
+    \begin{align*}
+        \nabla f(x) = \textbf{0}
+    \end{align*}
+    \label{<+label+>}
+\end{theorem}
+
+
 \begin{definition}
-    Linear Programming
-    \label{m}
+    The ball of size $R > 0$ around a point $x \in \rnum^{n}$, written $B(x, R)$, is the set of all points $y \in \rnum^{n}$ such that:
+    \begin{align*}
+        \norm{y - x} < R
+    \end{align*}
+    \label{j}
 \end{definition}
 
 \begin{definition}
-    Quadratic Constrained Programming
-    \label{
-    }
+    An point, $x \in \rnum^{n}$ of some set $C \subseteq \rnum^{n}$ is an interior point if there exists an $R > 0 $ such that:
+    \begin{align*}
+        B(x, R) \subseteq C
+    \end{align*}
+    \label{<+label+>}
 \end{definition}
+
+\begin{theorem}
+    $2^{nd}$ Order Taylor's Approximation: If $f : U \rightarrow \rnum$ is a
+    twice differentiable function over an open set $U \subseteq \rnum^{n}$ and
+    $x \in U$ select some $r > 0$ such that $B(x, r) \subseteq U$. Then for any
+    $y \in B(x,r)$
+    \begin{align*}
+        f(y) = f(x) + \nabla f(x)^{T}(y-x) + \frac{1}{2}(y-x)^{2}\nabla^{2}f(x)(y-x) + o(\norm{y-x}^{2})
+    \end{align*}
+    \label{k}
+\end{theorem}
+
+
+\begin{definition}
+    A linear program is an optimisation of the form:
+    \begin{align*}
+        \underset{x}{\text{maximise }} \textbf{c}^{T}\textbf{x} \\
+        \text{such that } \textbf{A}\textbf{x} \leq \textbf{b} \\
+        \text{and } \textbf{x} \geq \textbf{0}
+    \end{align*}
+    $A \in \rnum^{m \times n}$, $c \in \rnum^{n}$, $b \in \rnum^{m}$ and $x \in rnum^{n}$
+    \label{t}
+\end{definition}
+
+
 
 \end{document}
