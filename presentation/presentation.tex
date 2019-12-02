@@ -475,8 +475,18 @@
             0
         \end{bmatrix}
     \end{align*}
-    This can be analytically solved for $\Delta x$ if $f$ is strictly convex as
-    then the Hessian of $f$ is full rank and thus invertible.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Newton's Method for Equality Constrained Optimisation}
+    Newton's method has quadratic convergence (faster than gradient descent)
+    even for the equality constrained version however it has high complexity and
+    memory usage for each iteration as it must store the whole Hessian
+    $(O(n^{2}))$ and calculate its inverse $(O(n^{3}))$.
+    \\~\\
+    The algorithm also requires a feasible starting point i.e. some $x$ such
+    that $A x = b$. The algorithm can be adapted to support starting from an
+    infeasible point.
 \end{frame}
 
 \begin{frame}
@@ -699,6 +709,21 @@ where
     needed.
     \\~\\
     The Barrier Method is quite robust to the choice of these in practice.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Barrier Method Analysis}
+    To reach an accuracy of $\varepsilon$, assuming that Newton's Method in step
+    2 returns an exact solution, requires
+    \begin{align*}
+        \frac{\log(m/{t^{(0)}\varepsilon)}}{\log \mu}+1
+    \end{align*}
+    iterations of the outer loop.
+    \\~\\
+    To apply the barrier method we require a strictly feasible point to begin
+    the algorithm. This can be solved by a \textit{feasability} method which is
+    an initial constrained convex optimisation problem for which it is easy to find a strictly
+    feasible starting point such that the barrier method can applied.
 \end{frame}
 
 
