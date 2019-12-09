@@ -65,7 +65,6 @@
 \section{Convex Constrained Optimisation}
 Convex constrained optimisation is a subproblem of the general theory of
 optimisation which is concerned with problems of the following form:
-{\footnotesize
 \begin{align*}
     \text{Find the }\underset{x}{\text{min}}\; &f_{0}(x) \\
     \text{  such that }&f_{1}(x) \leq 0 \\
@@ -74,7 +73,8 @@ optimisation which is concerned with problems of the following form:
     &g_{0}(x) = 0 \\
     &\hspace{5mm} \vdots \\
     &g_{m}(x) = 0
-\end{align*}}
+\end{align*}
+
 Where $f_0,\cdots, f_n$ are convex functions $\rnum^{p} \rightarrow \rnum$ and
 $g_0, \cdots, g_m$ are affine functions $\rnum^{p} \rightarrow \rnum$.
 
@@ -82,14 +82,14 @@ Convex constrained optimisation problems are ubiquitous in engineering,
 economics and operations. Optimisation problems which are convex include linear
 programming, quadratic programming and semidefinite programming. Linear
 programming is a convex optimisation problem where $f_{0}$ through $f_{n}$ and
-$g_{0}$ through $g_{n}$ are linear. Linear programming problems range from
-portfolio optimisation \todo{find citation }through scheduling and planning
-\todo{find citation} and to statistical inference.
+$g_{0}$ through $g_{n}$ are linear.
 \subsection{Example}
 A statistical example of a
 constrained convex optimisation problem is that of $\ell_{1}$-norm regularised
-logsitic regression: Given some data $A = [a_{1},\dots,a_{m}]$ and the
-associated vector 
+logsitic regression. Given some data $a = [a_{1},\dots,a_{m}]$ and the
+associated vector of binary outcomes $b = [b_{1}, \dots, b_{m}]^{T}$ the MLE
+solution to the parameters of a logistic model can be expressed as the
+minimisation problem:
 \begin{align*}
     \underset{v, w}{\text{minimise}} \,\, (1/m)\sum_{i=1}^{m}f(w^{T}a_{i} + vb_{i})
     + \lambda\sum_{i=1}^{n}|w_{i}|
