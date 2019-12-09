@@ -1,0 +1,165 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{listings}
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+
+\let\oldnorm\norm   % <-- Store original \norm as \oldnorm
+\let\norm\undefined % <-- "Undefine" \norm
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+
+\def\parw{\ensuremath{\textbf{w}}}
+
+\def\exp{\ensuremath{\mathbb{E}}}
+\def\sinn{\text{sin}}
+\def\coss{\text{cos}}
+
+\def\phix{\ensuremath{\phi(\textbf{X})}}
+
+\usepackage[margin=1.00in]{geometry}
+\usepackage{bm}
+\usepackage{cite}
+\newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+
+\def\bolxi{\ensuremath{\textbf{x}_{i}}}
+\usepackage{titling}
+\usepackage{indentfirst}
+\usepackage[textwidth=3.7cm]{todonotes}
+\setlength{\marginparwidth}{3.7cm}
+\usepackage{etoolbox}
+\lstset{breaklines}
+\usepackage{amssymb}
+
+\usepackage{amsmath}
+
+
+\def\rnum{\mathbb{R}}
+
+
+\newtheorem*{definition}{Definition}
+\newtheorem*{theorem}{Theorem}
+
+
+
+\usepackage[compact]{titlesec}         % you need this package
+\titlespacing{\section}{1pt}{1pt}{1pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt} % this reduces space between (sub)sections to 0pt, for example
+\AtBeginDocument{%                     % this will reduce spaces between parts (above and below) of texts within a (sub)section to 0pt, for example - like between an 'eqnarray' and text
+    \setlength\abovedisplayskip{8pt}
+    \setlength\belowdisplayskip{0pt}
+}
+
+\setlength{\droptitle}{-20mm} % This is your set scream
+\setlength{\parindent}{0.0em}
+\setlength{\parskip}{1.0em}
+
+\date{}
+\author{Alessio Zakaria}
+\title{Contextual Background\vspace{-30mm}}
+\begin{document}
+\maketitle
+\section{Convex Constrained Optimisation}
+Convex constrained optimisation is a subproblem of the general theory of
+optimisation which is concerned with problems of the following form:
+{\footnotesize
+\begin{align*}
+    \text{Find the }\underset{x}{\text{min}}\; &f_{0}(x) \\
+    \text{  such that }&f_{1}(x) \leq 0 \\
+    & \hspace{5mm} \vdots \\
+    &f_{n}(x) \leq 0 \\
+    &g_{0}(x) = 0 \\
+    &\hspace{5mm} \vdots \\
+    &g_{m}(x) = 0
+\end{align*}}
+Where $f_0,\cdots, f_n$ are convex functions $\rnum^{p} \rightarrow \rnum$ and
+$g_0, \cdots, g_m$ are affine functions $\rnum^{p} \rightarrow \rnum$.
+
+Convex constrained optimisation problems are ubiquitous in engineering,
+economics and operations. Optimisation problems which are convex include linear
+programming, quadratic programming and semidefinite programming. Linear
+programming is a convex optimisation problem where $f_{0}$ through $f_{n}$ and
+$g_{0}$ through $g_{n}$ are linear. Linear programming problems range from
+portfolio optimisation \todo{find citation }through scheduling and planning
+\todo{find citation} and to statistical inference.
+\subsection{Example}
+A statistical example of a
+constrained convex optimisation problem is that of $\ell_{1}$-norm regularised
+logsitic regression: Given some data $A = [a_{1},\dots,a_{m}]$ and the
+associated vector 
+\begin{align*}
+    \underset{v, w}{\text{minimise}} \,\, (1/m)\sum_{i=1}^{m}f(w^{T}a_{i} + vb_{i})
+    + \lambda\sum_{i=1}^{n}|w_{i}|
+\end{align*}
+
+Where $f$ is the logistic loss function. When the regularisation is incorporated
+into the objective as normal the objective is non-differentiable and therefore
+subgradient or ellipsoid methods must be used. However the regularisation can be
+factored out of the objective as a constraint as so:
+\begin{align*}
+    \underset{u, v, w}{\text{minimise}} \,\, (1/m)\sum_{i=1}^{m}f(w^{T}a_{i} +
+    vb_{i}) \\
+    \text{such that } -u_{i} \leq w_{i} \leq u_{i}, \,\,\, i=1,..n
+\end{align*}
+
+for which a convex constrained optimisation algorithm can be used.
+
+\subsection{Summary of Methods}
+A variety of methods exist to solve these problems. Prior to the
+mid-20$^{\text{th}}$ century inequality constraints had been largely
+ignored \cite{tikhomirov1996evolution}. The first treatment of inequality
+constraints was by Kantorovich in 1939 who formalised linear programming
+problems in an attempt to solve an eningeering problem
+\cite{kantorovich1960mathematical}. The next big step in
+constrained optimisation was obtained by Dantzig in 1947 through his simplex
+method \cite{dantzig1966simplexmethode}. The
+simplex method functions by observing that the feasible set for a linear
+programming problem constitues a convex polytope for which the vertices are
+basic feasible solutions. For a linear programming problem expressed in normal
+form if the objective function attains its maximum value in the feasible set
+then it attains this maximum value at its vertices. The simplex algorithm
+traverses from vertex to vertex along edges which increase/decrease the
+objective to find this maximum.
+
+The next jump in solving convex constrained optimisation was the
+ellipsoid method first proposed by Yudin and Nemirovski in 1974
+\cite{nemirovsky1983informational} and applied to linear
+programming by Khachiyan in 1979 \cite{khachiyan1980polynomial}.The significance of this method was that it had worst-case
+polynomial complexity for linear programming problems could be solved in
+polynomial time. The ellipsoid method functions by fitting an ellipsoid to the
+feasible set and using an oracle to find a cut through the center of the
+ellipsoid such that the optimal value is contained within one side. The
+ellipsoid of minimum volume covering the half of the ellipsoid is then fitted
+with this repeated with the center of the ellipsoid tending to the optimal
+value. Inequality constraints can be incorporated by making cuts to ensure the
+ellipsoid remains in the feasible set. The ellipsoid method suffers from
+numerical instability and poor performance in practice.
+
+Non-linear methods were, during largely developed independently of linear
+programming methods during this period. In 1968 Fiacco and McCormick gave the
+founding principles of barrier methods. Barrier methods incorporate inequality
+constraints for general convex constrained problems into the objective as
+described in the lecture slides \cite{fiacco1968nonlinear}. These methods proved
+to be non-optimal in comparison to existing methods at the time. This was the
+begining of interior point methods for optimisation which, rather than
+traversing the boundary of the fesaible set as with older methods, traversed the
+interior of the feasible set to the optimal value.
+
+A practically efficient polynomial time interior point method for solving linear
+programming problems was invented in 1984 by Karmarkar \cite{karmarkar1984new}.
+Karmarkar's algorithm was later shown by Gill et al. to be particular case of
+projected Newton's method with a logarithmic barrier function.\cite{gill1986projected}.
+
+The currently preferred interior point method for solving convex constrained
+problems are primal-dual methods first proposed by Megiddo in
+1989\cite{megiddo1989pathways}. Primal dual methods take newton steps and update
+both primal and dual variables to more quickly converge to minima at high
+accuracy.
+
+
+\bibliographystyle{unsrt}
+\bibliography{mybib}
+\end{document}
